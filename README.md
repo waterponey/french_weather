@@ -1,2 +1,2 @@
-# french_weather
-This project allows us to fetch weather related information from APIs regarding France.
+# French Weather
+This project allows us to fetch french weather related information from APIs.
