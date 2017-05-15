@@ -1,0 +1,3 @@
+name: french_weather
+dependencies:
+- python=3

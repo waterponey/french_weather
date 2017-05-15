@@ -17,7 +17,7 @@ class APICall:
                 if count > 0:
                     data['count'] = count - 1
                     return (lambda lat, lng, time:
-                            dark_sky_call(key, lat, lng, time))
+                                   dark_sky_call(key, lat, lng, time))
         else:
             return google_geocode_call
 

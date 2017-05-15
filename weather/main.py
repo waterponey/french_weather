@@ -89,15 +89,16 @@ def read_json(path):
     return load
 
 
-def get_weather(city, datetimes):
+def get_weather(city, datetimes, count):
     result = json.loads('[]')
     timestamps = [int(dt.timestamp()) for dt in datetimes]
     for i in range(365):
         time = timestamps[i]
         date = datetimes[i]
         url = api_singleton.get_call_url()(city['latitude'], city['longitude'], time)
+        count = count + 1
         response = url2json(url)
-        print('At {}, for {}, with {}'.format(date, city['prefecture'], url))
+        print('At {}, for {}, with {}, nb {}'.format(date, city['prefecture'], url, count))
         response['day'] = date.day
         response['month'] = date.month
         response['year'] = date.year
@@ -126,6 +127,7 @@ if __name__ == '__main__':
         dump_json(data, city_ref_file)
 
     cities = read_json(city_ref_file)
+    count = 0
 
     for key in cities.keys():
         data_path = weather_data_dir + '/' + key + '-' + cities[key]['prefecture'] + '.json'
@@ -135,5 +137,6 @@ if __name__ == '__main__':
             break
 
         if not os.path.isfile(data_path):
-            weather = get_weather(cities[key], datetimes)
+            weather = get_weather(cities[key], datetimes, count)
+            count = count + 365
             dump_json(weather, data_path)
